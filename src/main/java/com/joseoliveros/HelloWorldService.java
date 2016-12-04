@@ -9,13 +9,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.annotation.XmlElement;
 
 @Path("/hello")
-@Produces(MediaType.APPLICATION_XML)
+@Produces(MediaType.APPLICATION_JSON)
 @WebService
 public interface HelloWorldService {
 
     @Path("{nombre}")
     @GET
-    Mensaje sayHello(@WebParam(name = "nombre") @PathParam("nombre") String nombre);
+    Mensaje sayHello(@WebParam(name = "nombre") @XmlElement(required = true) @PathParam("nombre") String nombre);
 }

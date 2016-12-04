@@ -2,32 +2,45 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-       xmlns:jaxws="http://cxf.apache.org/jaxws"
-       xsi:schemaLocation="
-http://www.springframework.org/schema/beans
+       xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:cxf="http://cxf.apache.org/core"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans.xsd
 http://cxf.apache.org/jaxrs
 http://cxf.apache.org/schemas/jaxrs.xsd
 http://cxf.apache.org/jaxws
-http://cxf.apache.org/schemas/jaxws.xsd">
+http://cxf.apache.org/schemas/jaxws.xsd http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 
     <import resource="classpath:META-INF/cxf/cxf.xml" />
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+    <import resource="classpath:META-INF/cxf/osgi/cxf-extension-osgi.xml" />
+
 
     <import resource="classpath:service-definition-beans.xml"/>
 
     <!-- JAX-RS -->
-    <jaxrs:server address="/hellorest">
+    <jaxrs:server id="restContainer" address="/hellorest">
+        <jaxrs:providers>
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+            <ref bean="wadlProvider"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <ref bean="helloWorldService"/>
         </jaxrs:serviceBeans>
         <jaxrs:extensionMappings>
-            <entry key="json" value="application/json"/>
-            <entry key="xml" value="application/xml"/>
+            <entry key="xml" value="application/xml" />
+            <entry key="json" value="application/json" />
         </jaxrs:extensionMappings>
     </jaxrs:server>
 
     <!-- JAX-WS -->
-    <jaxws:endpoint implementor="#helloWorldService" address="/hellosoap"/>
+    <jaxws:endpoint id="location" implementor="#helloWorldService" address="/hellosoap"/>
+
+    <!-- CXF Message logging -->
+
+    <cxf:bus>
+        <cxf:features>
+            <cxf:logging/>
+        </cxf:features>
+    </cxf:bus>
 
 </beans>

@@ -3,16 +3,31 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="helloWorldService" class="com.joseoliveros.HelloWorldServiceImpl"/>
+    <!-- PROVIDERS -->
 
-    <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
-        <property name="marshallerProperties" ref="propertiesMap"/>
+    <bean id="wadlProvider" class="org.apache.cxf.jaxrs.model.wadl.WadlGenerator">
+        <property name="applicationTitle" value="CXF Test sample application" />
     </bean>
 
-    <util:map id="propertiesMap">
-        <entry key="jaxb.formatted.output">
-            <value type="java.lang.Boolean">true</value>
-        </entry>
-    </util:map>
+    <!--<bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">-->
+        <!--<property name="marshallerProperties" ref="propertiesMap" />-->
+    <!--</bean>-->
+
+    <!--<util:map id="propertiesMap">-->
+        <!--<entry key="jaxb.formatted.output">-->
+            <!--<value type="java.lang.Boolean">true</value>-->
+        <!--</entry>-->
+    <!--</util:map>-->
+
+    <!--<bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider">-->
+        <!--<property name="namespaceMap" ref="jsonNamespaceMap" />-->
+    <!--</bean>-->
+
+    <!--<util:map id="jsonNamespaceMap" map-class="java.util.Hashtable">-->
+        <!--<entry key="http://www.example.org/books" value="b" />-->
+    <!--</util:map>-->
+
+
+    <bean id="helloWorldService" class="com.joseoliveros.HelloWorldServiceImpl"/>
 
 </beans>
