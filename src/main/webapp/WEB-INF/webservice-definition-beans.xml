@@ -12,16 +12,22 @@ http://cxf.apache.org/jaxws
 http://cxf.apache.org/schemas/jaxws.xsd">
 
     <import resource="classpath:META-INF/cxf/cxf.xml" />
-    <import resource="classpath:META-INF/cxf/cxf-extension-jaxrs-binding.xml" />
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
-
 
     <import resource="classpath:service-definition-beans.xml"/>
 
     <!-- JAX-RS -->
-    <jaxws:server id="customerService" address="/">
-        <jawrs;
-    </jaxws:server>
+    <jaxrs:server address="/hellorest">
+        <jaxrs:serviceBeans>
+            <ref bean="helloWorldService"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:extensionMappings>
+            <entry key="json" value="application/json"/>
+            <entry key="xml" value="application/xml"/>
+        </jaxrs:extensionMappings>
+    </jaxrs:server>
 
-    <jaxws:endpoint id="helloWorld" implementor="#helloWorldService" address="/HelloWorld"/>
+    <!-- JAX-WS -->
+    <jaxws:endpoint implementor="#helloWorldService" address="/hellosoap"/>
+
 </beans>

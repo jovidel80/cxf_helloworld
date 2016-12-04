@@ -1,11 +1,28 @@
 package com.joseoliveros;
 
-import javax.jws.WebService;
+import com.joseoliveros.beans.Mensaje;
+import org.apache.cxf.jaxrs.ext.MessageContext;
 
-@WebService(endpointInterface = "com.joseoliveros.HelloWorldService")
+import javax.ws.rs.core.Context;
+
 public class HelloWorldServiceImpl implements HelloWorldService {
 
-    public void sayHello() {
-        System.out.println("Hola Mundo");
+    @Context
+    MessageContext jaxrsContex;
+
+    public Mensaje sayHello(String nombre) {
+
+        Mensaje mensaje;
+
+        if (jaxrsContex.getUriInfo() == null) {
+            mensaje = new Mensaje();
+            mensaje.setMensaje("Hola " + nombre + " desde JAXWS");
+            return mensaje;
+        } else {
+            mensaje = new Mensaje();
+            mensaje.setMensaje("Hola " + nombre + " desde JAXRS");
+            return mensaje;
+        }
     }
+
 }
